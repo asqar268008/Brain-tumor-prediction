@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeuroScan AI — Brain Tumor Prediction Report</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation / Header (Hidden when printing or exporting report) -->
+  <header class="app-header no-print">
+    <div class="header-container">
+      <div class="brand-section">
+        <div class="brand-logo-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2a9 9 0 0 0-9 9c0 3.87 2.45 7.17 5.88 8.44.18.06.37.1.56.12.19.01.37-.03.54-.11.23-.11.4-.3.49-.53.11-.29.07-.61-.09-.86-.88-1.33-1.38-2.92-1.38-4.56 0-4.41 3.59-8 8-8s8 3.59 8 8c0 1.64-.5 3.23-1.38 4.56-.16.25-.2.57-.09.86.09.23.26.42.49.53.17.08.35.12.54.11.19-.02.38-.06.56-.12C20.55 18.17 23 14.87 23 11a9 9 0 0 0-9-9zm-2 10a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm8 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/>
+          </svg>
+        </div>
+        <div class="brand-title-wrap">
+          <h1>NeuroScan AI <span class="badge-version">v2.0 Pro</span></h1>
+          <div class="brand-subtitle">Clinical Brain MRI Diagnostic Inference & Reporting</div>
+        </div>
+      </div>
+
+      <div class="header-meta">
+        <div id="backendStatusPill" class="status-pill checking" title="FastAPI Backend Status">
+          <span class="status-dot"></span>
+          <span id="backendStatusText">Checking Server...</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="app-main">
+    <div class="dashboard-grid">
+
+      <!-- Left Panel: Scan Input (Hidden when printing or exporting report) -->
+      <section class="panel-card no-print" id="scanCard">
+        <div class="panel-header">
+          <div class="panel-title">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            MRI Scan Input
+          </div>
+          <span class="step-pill">Upload & Predict</span>
+        </div>
+
+        <div class="panel-body">
+          <!-- Dropzone -->
+          <div class="dropzone" id="dropzone">
+            <div class="dropzone-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+              </svg>
+            </div>
+            <div class="dropzone-title">Upload Brain MRI Slice</div>
+            <div class="dropzone-hint">Drag & drop an MRI scan slice here, or click to browse</div>
+            <div class="dropzone-formats">
+              <span>PNG</span> &bull; <span>JPEG</span> &bull; <span>WEBP</span> &bull; <span>DICOM-PNG</span>
+            </div>
+            <input type="file" id="fileInput" class="file-input" accept="image/*">
+          </div>
+
+          <!-- Preview Container -->
+          <div class="preview-container" id="previewContainer">
+            <div class="preview-image-wrap">
+              <div class="scan-overlay-grid"></div>
+              <div class="scan-line"></div>
+              <img id="previewImage" class="preview-img" alt="MRI Scan Preview">
+            </div>
+            <div class="preview-meta">
+              <div class="preview-meta-info">
+                <span><strong>Resolution:</strong> <span id="previewDimensions">-- &times; --</span></span>
+                <span><strong>Size:</strong> <span id="previewSize">-- KB</span></span>
+              </div>
+              <button type="button" class="remove-btn" id="removeImageBtn" title="Clear and select new image">
+                <svg style="width:14px;height:14px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+                Clear
+              </button>
+            </div>
+          </div>
+
+          <!-- Predict Action Button (Professional compact sizing) -->
+          <div class="action-row">
+            <button type="button" class="btn-predict" id="predictBtn" disabled>
+              <svg class="btn-icon" id="btnIcon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+              <span class="btn-spinner" id="btnSpinner" style="display:none;"></span>
+              <span id="predictBtnText">Predict Disease & Generate Report</span>
+            </button>
+          </div>
+
+          <!-- Scanning Status Indicator -->
+          <div class="analyzing-banner" id="analyzingBanner">
+            <div class="spinner-blue"></div>
+            <span>Analyzing MRI with PyTorch CNN model...</span>
+          </div>
+
+          <!-- Error Alert Banner -->
+          <div class="alert alert-danger" id="errorAlert">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div id="errorMessage">An unexpected error occurred.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Panel: Formal Prediction Report Document -->
+      <section class="panel-card" id="reportPanel">
+        <div class="panel-header no-print">
+          <div class="panel-title">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Prediction Report
+          </div>
+          <div class="report-header-actions" id="reportHeaderActions" style="display: none;">
+            <button type="button" class="btn-sm btn-primary-action" id="downloadPdfBtn" title="Download official PDF report">
+              <svg style="width:15px;height:15px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              Download PDF Report
+            </button>
+            <button type="button" class="btn-sm btn-outline" id="printReportBtn" title="Print prediction report">
+              <svg style="width:15px;height:15px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+              </svg>
+              Print
+            </button>
+            <button type="button" class="btn-sm btn-outline" id="downloadTxtBtn" title="Download report as text">
+              <svg style="width:15px;height:15px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              Text
+            </button>
+          </div>
+        </div>
+
+        <div class="panel-body">
+          <!-- Placeholder State -->
+          <div class="placeholder-state" id="placeholderState">
+            <div class="placeholder-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <div class="placeholder-title">No Prediction Report Generated</div>
+            <div class="placeholder-desc">Upload a brain MRI scan image on the left and click "Predict Disease & Generate Report" to execute neural network inference.</div>
+          </div>
+
+          <!-- Formal Prediction Report Sheet (Clean printable/downloadable PDF document) -->
+          <div class="prediction-report-doc" id="predictionReportDoc" style="display: none;">
+            
+            <!-- Document Header -->
+            <div class="report-doc-header">
+              <div class="report-doc-brand">
+                <div class="report-doc-title">NEUROSCAN CLINICAL DIAGNOSTICS</div>
+                <div class="report-doc-subtitle">AI-Assisted Brain MRI Pathology Classification</div>
+              </div>
+              <div class="report-doc-badge">OFFICIAL PREDICTION REPORT</div>
+            </div>
+
+            <!-- Metadata Details Grid -->
+            <div class="report-meta-table">
+              <div class="meta-cell">
+                <span class="meta-label">Report ID:</span>
+                <span class="meta-val" id="reportIdVal">--</span>
+              </div>
+              <div class="meta-cell">
+                <span class="meta-label">Date & Time:</span>
+                <span class="meta-val" id="reportTimestampVal">--</span>
+              </div>
+              <div class="meta-cell">
+                <span class="meta-label">Scan Source:</span>
+                <span class="meta-val" id="reportFileNameVal">--</span>
+              </div>
+              <div class="meta-cell">
+                <span class="meta-label">Imaging Modality:</span>
+                <span class="meta-val">Brain MRI (T1/T2 Axial Slice)</span>
+              </div>
+              <div class="meta-cell">
+                <span class="meta-label">AI Architecture:</span>
+                <span class="meta-val">PyTorch CNN 4-Class Diagnostic Net</span>
+              </div>
+              <div class="meta-cell">
+                <span class="meta-label">Verification Status:</span>
+                <span class="meta-val" style="color:var(--emerald-600); font-weight:700;">Verified Inferred</span>
+              </div>
+            </div>
+
+            <!-- Primary Diagnosis Banner -->
+            <div class="diagnosis-banner" id="diagnosisBanner">
+              <div class="diagnosis-info-wrap">
+                <div class="diagnosis-caption">PRIMARY DIAGNOSTIC FINDING</div>
+                <div class="diagnosis-heading" id="diagnosisTitle">--</div>
+              </div>
+              <div class="diagnosis-badge" id="tumorBadge">--</div>
+            </div>
+
+            <!-- Key Findings & Thumbnail Grid -->
+            <div class="findings-composite-grid">
+              <div class="findings-summary-box">
+                <div class="finding-col">
+                  <div class="finding-label">Predicted Pathology</div>
+                  <div class="finding-data" id="findingClassVal">--</div>
+                </div>
+                <div class="finding-col">
+                  <div class="finding-label">Inference Confidence</div>
+                  <div class="finding-data" id="findingConfidenceVal">--%</div>
+                </div>
+                <div class="finding-col">
+                  <div class="finding-label">Tumor Status</div>
+                  <div class="finding-data" id="findingTumorStatusVal">--</div>
+                </div>
+                <div class="finding-col">
+                  <div class="finding-label">Clinical Severity</div>
+                  <div class="finding-data" id="findingSeverityVal">--</div>
+                </div>
+              </div>
+              <div class="report-thumb-wrap">
+                <img id="reportScanThumb" class="report-thumb-img" alt="Evaluated MRI Slice">
+                <div class="report-thumb-caption">Evaluated MRI Slice</div>
+              </div>
+            </div>
+
+            <!-- Probability Breakdown Table -->
+            <div class="report-section">
+              <div class="report-section-title">
+                <span>Class Probability Distribution</span>
+                <span class="report-section-sub">Softmax Normalized Probabilities</span>
+              </div>
+              <div class="prob-table-wrap">
+                <table class="report-table">
+                  <thead>
+                    <tr>
+                      <th>Classification Category</th>
+                      <th>Model Probability</th>
+                      <th style="width: 45%;">Distribution Bar</th>
+                    </tr>
+                  </thead>
+                  <tbody id="reportTableBody">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Clinical Assessment & Recommendations -->
+            <div class="report-section">
+              <div class="report-section-title">Clinical Assessment & Guidance</div>
+              <div class="clinical-assessment-content">
+                <p id="clinicalDescription">--</p>
+                <div class="recommendation-box" style="margin-top: 10px;">
+                  <strong>Recommended Next Steps: </strong><span id="clinicalRecommendation">--</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Document Signature & Verification Footer -->
+            <div class="report-doc-footer">
+              <div class="footer-sign-line">
+                <div>
+                  <div class="sign-title">Automated AI Diagnostic Engine</div>
+                  <div class="sign-sub">NeuroScan Neural Inference Core v2.0</div>
+                </div>
+                <div style="text-align: right;">
+                  <div class="sign-title">Physician Review Required</div>
+                  <div class="sign-sub">Signature: __________________________</div>
+                </div>
+              </div>
+              <div class="report-disclaimer">
+                <strong>Medical Notice:</strong> This prediction report is generated by a deep learning algorithm for clinical decision support. Final diagnostic determination must be made by a licensed healthcare provider based on full diagnostic imaging, laboratory tests, and clinical evaluation.
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Medical Disclaimer Footer (Hidden in print) -->
+  <footer class="app-footer no-print">
+    <div>
+      <span class="disclaimer-badge">Clinical Notice:</span> NeuroScan AI is an automated decision support tool for clinical and research evaluation.
+    </div>
+  </footer>
+
+  <!-- Local PDF Generation Library & Application Controller -->
+  <script src="html2pdf.bundle.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

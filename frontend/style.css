@@ -1,0 +1,1086 @@
+/* ==========================================================================
+   NeuroScan AI - Clinical Diagnostic Suite Stylesheet
+   Modern, Clinical-Grade Design System & Formal Prediction Report
+   ========================================================================== */
+
+:root {
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --primary-light: #eff6ff;
+  --primary-border: #bfdbfe;
+  
+  --slate-900: #0f172a;
+  --slate-800: #1e293b;
+  --slate-700: #334155;
+  --slate-600: #475569;
+  --slate-500: #64748b;
+  --slate-400: #94a3b8;
+  --slate-300: #cbd5e1;
+  --slate-200: #e2e8f0;
+  --slate-100: #f1f5f9;
+  --slate-50: #f8fafc;
+  
+  --emerald-600: #059669;
+  --emerald-500: #10b981;
+  --emerald-100: #d1fae5;
+  --emerald-50: #ecfdf5;
+
+  --amber-600: #d97706;
+  --amber-500: #f59e0b;
+  --amber-100: #fef3c7;
+  --amber-50: #fffbeb;
+
+  --rose-600: #e11d48;
+  --rose-500: #f43f5e;
+  --rose-100: #ffe4e6;
+  --rose-50: #fff1f2;
+
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+  
+  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #f1f5f9;
+  color: var(--slate-800);
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   Header & Navigation
+   ========================================================================== */
+
+.app-header {
+  background: var(--slate-900);
+  color: white;
+  border-bottom: 1px solid var(--slate-800);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.15);
+}
+
+.header-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-logo-icon {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, #2563eb, #38bdf8);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 15px rgba(37, 99, 235, 0.5);
+}
+
+.brand-logo-icon svg {
+  width: 26px;
+  height: 26px;
+  fill: white;
+}
+
+.brand-title-wrap h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #f8fafc;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge-version {
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.12);
+  color: #93c5fd;
+  padding: 2px 7px;
+  border-radius: var(--radius-full);
+}
+
+.brand-subtitle {
+  font-size: 0.8rem;
+  color: var(--slate-400);
+  font-weight: 400;
+}
+
+.header-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.status-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: var(--transition);
+}
+
+.status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--slate-400);
+}
+
+.status-pill.online .status-dot {
+  background: var(--emerald-500);
+  box-shadow: 0 0 8px var(--emerald-500);
+  animation: pulse-dot 2s infinite;
+}
+
+.status-pill.offline .status-dot {
+  background: var(--rose-500);
+  box-shadow: 0 0 8px var(--rose-500);
+}
+
+.status-pill.checking .status-dot {
+  background: var(--amber-500);
+}
+
+@keyframes pulse-dot {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+/* ==========================================================================
+   Main Layout
+   ========================================================================== */
+
+.app-main {
+  flex: 1;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 28px 24px;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  gap: 28px;
+  align-items: start;
+}
+
+@media (max-width: 960px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   Card System
+   ========================================================================== */
+
+.panel-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--slate-200);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.panel-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.panel-header {
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--slate-200);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+}
+
+.panel-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--slate-800);
+}
+
+.panel-title svg {
+  width: 20px;
+  height: 20px;
+  color: var(--primary);
+}
+
+.step-pill {
+  font-size: 0.74rem;
+  background: var(--primary-light);
+  color: var(--primary);
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: var(--radius-full);
+}
+
+.panel-body {
+  padding: 24px;
+}
+
+/* ==========================================================================
+   Upload Area & Dropzone
+   ========================================================================== */
+
+.dropzone {
+  border: 2px dashed var(--slate-300);
+  border-radius: var(--radius-md);
+  padding: 34px 20px;
+  text-align: center;
+  background: var(--slate-50);
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.dropzone:hover, .dropzone.drag-active {
+  border-color: var(--primary);
+  background: var(--primary-light);
+}
+
+.dropzone.drag-active {
+  transform: scale(1.01);
+}
+
+.dropzone-icon {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 12px;
+  color: var(--primary);
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.dropzone-icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.dropzone-title {
+  font-weight: 700;
+  font-size: 0.98rem;
+  color: var(--slate-800);
+  margin-bottom: 4px;
+}
+
+.dropzone-hint {
+  font-size: 0.84rem;
+  color: var(--slate-500);
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.dropzone-formats {
+  display: inline-flex;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--slate-400);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.file-input {
+  display: none;
+}
+
+/* ==========================================================================
+   Preview Stage & Scanning Laser Animation
+   ========================================================================== */
+
+.preview-container {
+  display: none;
+  margin-top: 16px;
+  position: relative;
+  background: var(--slate-900);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--slate-300);
+}
+
+.preview-image-wrap {
+  position: relative;
+  width: 100%;
+  height: 230px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+}
+
+.preview-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.scan-line {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #38bdf8, #2563eb, transparent);
+  box-shadow: 0 0 16px #38bdf8, 0 0 32px #2563eb;
+  z-index: 10;
+  animation: scan-animation 1.4s ease-in-out infinite alternate;
+}
+
+.scan-overlay-grid {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(56, 189, 248, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56, 189, 248, 0.08) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.scanning .scan-line,
+.scanning .scan-overlay-grid {
+  display: block;
+}
+
+@keyframes scan-animation {
+  0% { top: 2%; opacity: 0.8; }
+  100% { top: 96%; opacity: 1; }
+}
+
+.preview-meta {
+  background: rgba(15, 23, 42, 0.95);
+  color: var(--slate-300);
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.preview-meta-info {
+  display: flex;
+  gap: 12px;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: var(--rose-500);
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: var(--transition);
+}
+
+.remove-btn:hover {
+  color: var(--rose-600);
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   Predict Action Button (Sleek, Professional Sizing)
+   ========================================================================== */
+
+.action-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+.btn-predict {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 22px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  border: none;
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+  cursor: pointer;
+  transition: var(--transition);
+  width: auto;
+}
+
+.btn-predict:hover:not(:disabled) {
+  background: var(--primary-hover);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-predict:disabled {
+  background: var(--slate-200);
+  color: var(--slate-400);
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.btn-predict svg {
+  width: 18px;
+  height: 18px;
+}
+
+.btn-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* ==========================================================================
+   Analyzing Status Banner
+   ========================================================================== */
+
+.analyzing-banner {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--primary-light);
+  border: 1px solid var(--primary-border);
+  border-radius: var(--radius-md);
+  margin-top: 14px;
+  color: var(--primary-hover);
+  font-size: 0.84rem;
+  font-weight: 600;
+  animation: fade-in 0.2s ease-out;
+}
+
+.spinner-blue {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(37, 99, 235, 0.25);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   Header Action Buttons
+   ========================================================================== */
+
+.report-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-primary-action {
+  background: var(--primary);
+  color: white;
+  border: none;
+  box-shadow: 0 1px 3px rgba(37, 99, 235, 0.3);
+}
+
+.btn-primary-action:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.btn-primary-action:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.btn-outline {
+  background: white;
+  border: 1px solid var(--slate-300);
+  color: var(--slate-700);
+}
+
+.btn-outline:hover {
+  background: var(--slate-50);
+  border-color: var(--slate-400);
+  color: var(--slate-900);
+}
+
+/* ==========================================================================
+   Alert Banners
+   ========================================================================== */
+
+.alert {
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  margin-top: 14px;
+  font-size: 0.85rem;
+  display: none;
+  align-items: flex-start;
+  gap: 10px;
+  animation: fade-in 0.25s ease-out;
+}
+
+.alert-danger {
+  background: var(--rose-50);
+  border: 1px solid var(--rose-100);
+  color: var(--rose-600);
+}
+
+.alert-danger svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   Placeholder State
+   ========================================================================== */
+
+.placeholder-state {
+  text-align: center;
+  padding: 56px 20px;
+  color: var(--slate-400);
+}
+
+.placeholder-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 16px;
+  background: var(--slate-100);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--slate-400);
+}
+
+.placeholder-icon svg {
+  width: 30px;
+  height: 30px;
+}
+
+.placeholder-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--slate-700);
+  margin-bottom: 6px;
+}
+
+.placeholder-desc {
+  font-size: 0.86rem;
+  max-width: 380px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   Formal Prediction Report Document (Professional Clinical Sheet)
+   ========================================================================== */
+
+.prediction-report-doc {
+  background: #ffffff;
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  animation: fade-in 0.3s ease-out;
+  box-shadow: var(--shadow-sm);
+}
+
+.report-doc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--slate-800);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+.report-doc-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--slate-900);
+}
+
+.report-doc-subtitle {
+  font-size: 0.78rem;
+  color: var(--slate-500);
+  font-weight: 500;
+}
+
+.report-doc-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  border: 1px solid var(--slate-800);
+  border-radius: var(--radius-sm);
+  color: var(--slate-800);
+  background: var(--slate-50);
+}
+
+/* Metadata Grid */
+.report-meta-table {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px 16px;
+  background: var(--slate-50);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  margin-bottom: 18px;
+  font-size: 0.82rem;
+}
+
+@media (max-width: 768px) {
+  .report-meta-table {
+    grid-template-columns: 1fr;
+  }
+}
+
+.meta-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.meta-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--slate-400);
+  text-transform: uppercase;
+}
+
+.meta-val {
+  font-weight: 600;
+  color: var(--slate-800);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Primary Diagnosis Banner */
+.diagnosis-banner {
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-left: 6px solid var(--primary);
+  background: var(--slate-50);
+}
+
+.diagnosis-banner.severity-high {
+  border-left-color: var(--rose-500);
+  background: var(--rose-50);
+}
+
+.diagnosis-banner.severity-moderate {
+  border-left-color: var(--amber-500);
+  background: var(--amber-50);
+}
+
+.diagnosis-banner.severity-normal {
+  border-left-color: var(--emerald-500);
+  background: var(--emerald-50);
+}
+
+.diagnosis-caption {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: var(--slate-500);
+}
+
+.diagnosis-heading {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--slate-900);
+}
+
+.diagnosis-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 0.82rem;
+}
+
+.badge-tumor {
+  background: var(--rose-100);
+  color: var(--rose-600);
+}
+
+.badge-clear {
+  background: var(--emerald-100);
+  color: var(--emerald-600);
+}
+
+/* Findings & Thumbnail Grid */
+.findings-composite-grid {
+  display: grid;
+  grid-template-columns: 1fr 130px;
+  gap: 16px;
+  margin-bottom: 20px;
+  align-items: stretch;
+}
+
+@media (max-width: 680px) {
+  .findings-composite-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.findings-summary-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.finding-col {
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  background: #ffffff;
+}
+
+.finding-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--slate-500);
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.finding-data {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--slate-900);
+}
+
+.report-thumb-wrap {
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-sm);
+  padding: 6px;
+  background: var(--slate-50);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.report-thumb-img {
+  width: 100%;
+  height: 100px;
+  object-fit: contain;
+  background: #000;
+  border-radius: 4px;
+}
+
+.report-thumb-caption {
+  font-size: 0.68rem;
+  color: var(--slate-500);
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+/* Probability Distribution Table */
+.report-section {
+  margin-bottom: 20px;
+}
+
+.report-section-title {
+  font-size: 0.84rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--slate-700);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--slate-200);
+  padding-bottom: 6px;
+}
+
+.report-section-sub {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--slate-400);
+}
+
+.prob-table-wrap {
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.83rem;
+}
+
+.report-table th {
+  background: var(--slate-50);
+  text-align: left;
+  padding: 8px 12px;
+  font-weight: 600;
+  color: var(--slate-600);
+  border-bottom: 1px solid var(--slate-200);
+}
+
+.report-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--slate-100);
+  color: var(--slate-800);
+}
+
+.report-table tr:last-child td {
+  border-bottom: none;
+}
+
+.report-table tr.top-row {
+  background: var(--slate-50);
+  font-weight: 700;
+}
+
+.table-prob-bar-track {
+  height: 7px;
+  background: var(--slate-200);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.table-prob-bar-fill {
+  height: 100%;
+  background: var(--primary);
+  border-radius: var(--radius-full);
+  transition: width 0.6s ease;
+}
+
+.top-row.tumor .table-prob-bar-fill {
+  background: var(--rose-500);
+}
+
+.top-row.normal .table-prob-bar-fill {
+  background: var(--emerald-500);
+}
+
+/* Clinical Assessment */
+.clinical-assessment-content {
+  font-size: 0.85rem;
+  color: var(--slate-700);
+  line-height: 1.55;
+}
+
+.recommendation-box {
+  background: var(--primary-light);
+  border-left: 4px solid var(--primary);
+  padding: 9px 12px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.82rem;
+  color: var(--slate-800);
+}
+
+/* Document Footer / Signatures */
+.report-doc-footer {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--slate-200);
+}
+
+.footer-sign-line {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  font-size: 0.8rem;
+}
+
+.sign-title {
+  font-weight: 700;
+  color: var(--slate-800);
+}
+
+.sign-sub {
+  color: var(--slate-500);
+  font-size: 0.74rem;
+}
+
+.report-disclaimer {
+  font-size: 0.72rem;
+  color: var(--slate-400);
+  line-height: 1.5;
+  border-top: 1px dashed var(--slate-200);
+  padding-top: 10px;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.app-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--slate-200);
+  background: white;
+  padding: 16px 24px;
+  font-size: 0.78rem;
+  color: var(--slate-500);
+  text-align: center;
+}
+
+.disclaimer-badge {
+  font-weight: 600;
+  color: var(--slate-700);
+}
+
+/* ==========================================================================
+   PRINT STYLESHEET
+   Prints strictly the formal Prediction Report document on pure white A4.
+   ========================================================================== */
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .no-print,
+  .app-header,
+  .app-footer,
+  #scanCard,
+  #errorAlert,
+  #analyzingBanner,
+  #placeholderState,
+  .report-header-actions {
+    display: none !important;
+  }
+
+  .app-main {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .dashboard-grid {
+    display: block !important;
+  }
+
+  #reportPanel {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+
+  .panel-body {
+    padding: 0 !important;
+  }
+
+  .prediction-report-doc {
+    display: block !important;
+    border: 1px solid #1e293b !important;
+    border-radius: 4px !important;
+    padding: 20px !important;
+    margin: 0 auto !important;
+    max-width: 100% !important;
+    box-shadow: none !important;
+  }
+
+  .report-doc-header {
+    border-bottom: 2px solid #000 !important;
+  }
+
+  .report-meta-table,
+  .findings-summary-box,
+  .prob-table-wrap,
+  .report-thumb-wrap {
+    border: 1px solid #ccc !important;
+  }
+
+  .table-prob-bar-track {
+    border: 1px solid #aaa !important;
+  }
+
+  @page {
+    margin: 1.2cm;
+    size: A4 portrait;
+  }
+}
